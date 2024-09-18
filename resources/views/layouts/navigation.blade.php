@@ -15,6 +15,30 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @role('owner')
+                    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.index')">
+                        {{ __('Category') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.donaturs.index')" :active="request()->routeIs('admin.donaturs.index')">
+                        {{ __('Donatur') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.fundraising_withdrawals.index')" :active="request()->routeIs('admin.fundraising_withdrawals.index')">
+                        {{ __('Fundraising Withdrawal') }}
+                    </x-nav-link>
+                    @endrole
+                    @role('owner|fundraiser')
+                    <x-nav-link :href="route('admin.fundraisings.index')" :active="request()->routeIs('admin.fundraisings.index')">
+                        {{ __('Fundraising') }}
+                    </x-nav-link>
+                    @endrole
+                    <x-nav-link :href="route('admin.fundraisers.index')" :active="request()->routeIs('admin.fundraisers.index')">
+                        {{ __('Fundraiser') }}
+                    </x-nav-link>
+                    @role('fundraiser')
+                    <x-nav-link :href="route('admin.my-withdrawals')" :active="request()->routeIs('admin.my-withdrawals')">
+                        {{ __('My Withdrawal') }}
+                    </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
