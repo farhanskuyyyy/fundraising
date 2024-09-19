@@ -50,7 +50,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function fundraisings(): HasOne
+    public function fundraiser(): HasOne
     {
         return $this->hasOne(Fundraiser::class);
     }
