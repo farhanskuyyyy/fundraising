@@ -93,7 +93,7 @@
                                 PENDING
                             </span>
                         @elseif($fundraiserStatus == 'Active')
-                            <a href="#" class="font-bold py-4 bg-indigo-700 text-white rounded-full">Create a
+                            <a href="{{ route('admin.fundraisings.create') }}" class="font-bold py-4 bg-indigo-700 text-white rounded-full">Create a
                                 Fundraising</a>
                         @else
                             <form action="{{ route('admin.fundraiser.apply') }}" method="POST">
