@@ -88,7 +88,7 @@ class FundraisingController extends Controller
     public function edit(Fundraising $fundraising)
     {
         $categories = Category::get();
-        return view('admin.fundraisings.edit',compact('fundraising','categories'));
+        return view('admin.fundraisings.edit', compact('fundraising', 'categories'));
     }
 
     /**
@@ -108,7 +108,7 @@ class FundraisingController extends Controller
             $fundraising->update($validated);
         });
 
-        return redirect()->route('admin.fundraisings.show',$fundraising);
+        return redirect()->route('admin.fundraisings.show', $fundraising);
     }
 
     /**
@@ -126,5 +126,14 @@ class FundraisingController extends Controller
         return redirect()->route('admin.fundraisings.index');
     }
 
-    public function active_fundraising(Request $request, Fundraising $fundraising) {}
+    public function active_fundraising(Fundraising $fundraising)
+    {
+        DB::transaction(function () use ($fundraising) {
+            $fundraising->update([
+                'is_active' => true
+            ]);
+        });
+
+        return redirect()->route('admin.fundraisings.show', $fundraising);
+    }
 }
