@@ -38,17 +38,24 @@
                             <h3 class="text-indigo-950 text-xl font-bold">
                                 {{ date('d M Y', strtotime($withdrawal->created_at)) }}</h3>
                         </div>
-                        @if ($withdrawal->has_received)
-                            <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white">
-                                SUCCESS
-                            </span>
+                        @if ($withdrawal->has_sent)
+                            @if ($withdrawal->has_received)
+                                <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white">
+                                    DELIVERED
+                                </span>
+                            @else
+                                <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-indigo-500 text-white">
+                                    PROCESSING
+                                </span>
+                            @endif
                         @else
                             <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-orange-500 text-white">
                                 PENDING
                             </span>
                         @endif
                         <div class="hidden md:flex flex-row items-center gap-x-3">
-                            <a href="{{ route('admin.my-withdrawals.details',['fundraisingWithdrawal' => $withdrawal]) }}" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
+                            <a href="{{ route('admin.my-withdrawals.details', $withdrawal) }}"
+                                class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
                                 View Details
                             </a>
                         </div>

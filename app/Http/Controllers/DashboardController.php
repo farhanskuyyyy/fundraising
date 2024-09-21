@@ -30,8 +30,8 @@ class DashboardController extends Controller
         return view('admin.my_withdrawals.index', compact('withdrawals'));
     }
 
-    public function my_withdrawals_details(FundraisingWithdrawal $withdrawal)
+    public function my_withdrawals_details(FundraisingWithdrawal $fundraisingWithdrawal)
     {
-        return view('admin.my_withdrawals.details', compact('withdrawal'));
+        return view('admin.my_withdrawals.details', compact('fundraisingWithdrawal'));
     }
 }

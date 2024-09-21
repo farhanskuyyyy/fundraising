@@ -49,4 +49,9 @@ class Fundraising extends Model
         return $this->hasMany(FundraisingWithdrawal::class);
     }
 
+    public function phases(): HasMany
+    {
+        return $this->hasMany(FundraisingPhase::class);
+    }
+
 }
