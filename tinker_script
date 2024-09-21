@@ -1,0 +1,9 @@
+$donatur = new App\Models\Donatur();
+$donatur->total_amount = 5000000;
+$donatur->is_paid = false;
+$donatur->fundraising_id = 2;
+$donatur->notes = 'Jangan mengerah';
+$donatur->name = 'Hamba Allah';
+$donatur->phone_number = '089612312312';
+$donatur->proof = 'proofs/buktipalus.png';
+$donatur->save();
