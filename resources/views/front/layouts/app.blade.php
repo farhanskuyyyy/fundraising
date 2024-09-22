@@ -17,7 +17,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/flickity.min.css') }}" media="screen">
     <!-- Scripts -->
-    @vite(['resources/css/app-fe.css', 'resources/js/app-fe.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-poppins text-[#292E4B] bg-[#F6F9FC]">

@@ -288,6 +288,6 @@
     </section>
 @endsection
 
-@push('before-script')
-    {{-- <script src="{{ asset('assets/js/main.js') }}"></script> --}}
+@push('after-script')
+    <script src="{{ asset('assets/js/main.js') }}"></script>
 @endpush
