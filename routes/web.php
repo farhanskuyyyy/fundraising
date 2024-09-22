@@ -5,18 +5,19 @@ use App\Http\Controllers\DonaturController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\FundraiserController;
 use App\Http\Controllers\FundraisingController;
 use App\Http\Controllers\FundraisingPhaseController;
 use App\Http\Controllers\FundraisingWithdrawalController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [FrontController::class, 'index'])->name('front.index');
+Route::get('/category/{category}', [FrontController::class, 'category'])->name('front.category');
+Route::get('/details/fundraising:slug', [FrontController::class, 'details'])->name('front.details');
+Route::get('/support/{fundraising:slug}', [FrontController::class, 'support'])->name('front.support');
+Route::get('/checkout/{fundraising:slug/{totalAmountDonation}', [FrontController::class, 'checkout'])->name('front.checkout');
+Route::post('/checkout/store/{fundraising:slug/{totalAmountDonation}', [FrontController::class, 'store'])->name('front.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
