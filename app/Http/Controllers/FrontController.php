@@ -15,23 +15,23 @@ class FrontController extends Controller
             ->where('is_active', 1)
             ->orderByDesc('id')
             ->get();
-        return view('front.views.index',compact('fundraisings','categories'));
+        return view('front.views.index', compact('fundraisings', 'categories'));
     }
 
     public function category(Category $category)
     {
-        return view('front.views.category',compact('category'));
+        return view('front.views.category', compact('category'));
     }
 
     public function details(Fundraising $fundraising)
     {
         $goalReached = $fundraising->totalReachedAmount() >= $fundraising->target_amount;
-        return view('front.views.details',compact('fundraising','goalReached'));
+        return view('front.views.details', compact('fundraising', 'goalReached'));
     }
 
-    public function support()
+    public function support(Fundraising $fundraising)
     {
-        return view('front.views.support');
+        return view('front.views.support', compact('fundraising'));
     }
 
     public function checkout()
