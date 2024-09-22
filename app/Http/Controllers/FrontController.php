@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Donatur;
 use App\Models\Category;
 use App\Models\Fundraising;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreDonationRequest;
 
 class FrontController extends Controller
 {
@@ -34,13 +37,27 @@ class FrontController extends Controller
         return view('front.views.support', compact('fundraising'));
     }
 
-    public function checkout()
+    public function checkout(Fundraising $fundraising, $totalAmountDonation)
     {
-        return view('front.views.checkout');
+        return view('front.views.checkout', compact('fundraising', 'totalAmountDonation'));
     }
 
-    public function store(Request $request)
+    public function store(StoreDonationRequest $request, Fundraising $fundraising, $totalAmountDonation)
     {
-        return true;
+        DB::transaction(function () use ($request, $fundraising, $totalAmountDonation) {
+            $validated = $request->validated();
+            if ($request->hasFile('proof')) {
+                $proofPath = $request->file('proof')->store('proofs', 'public');
+                $validated['proof'] = $proofPath;
+            }
+
+            $validated['fundraising_id'] = $fundraising->id;
+            $validated['total_amount'] = $totalAmountDonation;
+            $validated['is_paid'] = false;
+
+            $donatur = Donatur::create($validated);
+        });
+
+        return redirect()->route('front.details', $fundraising->slug);
     }
 }
