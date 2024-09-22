@@ -56,14 +56,14 @@
                 @forelse ($fundraisings as $fundraising)
                     <div class="px-2 first-of-type:pl-4 last-of-type:pr-4 mb-6">
                         <div class="flex flex-col gap-[14px] rounded-2xl border border-[#E8E9EE] p-[14px] w-[208px]">
-                            <a href="{{ route('front.details',['slug' => $fundraising->slug]) }}">
+                            <a href="{{ route('front.details',$fundraising) }}">
                                 <div class="rounded-2xl w-full h-[120px] flex shrink-0 overflow-hidden">
                                     <img src="{{ Storage::url($fundraising->thumbnail) }}"
                                         class="w-full h-full object-cover" alt="thumbnail">
                                 </div>
                             </a>
                             <div class="flex flex-col gap-[6px]">
-                                <a href="{{ route('front.details',['slug' => $fundraising->slug]) }}"
+                                <a href="{{ route('front.details',$fundraising) }}"
                                     class="font-bold line-clamp-2 hover:line-clamp-none">{{ $fundraising->name }}</a>
                                 <p class="text-xs leading-[18px]">Target <span class="font-bold text-[#FF7815]">Rp
                                         {{ number_format($fundraising->target_amount, 0, ',', '.') }}</span></p>
@@ -86,7 +86,7 @@
             </div>
             <div class="flex flex-col gap-4 mt-[14px] px-4">
                 @forelse ($fundraisings as $fundraising)
-                    <a href="{{ route('front.details',['slug' => $fundraising->slug]) }}" class="card">
+                    <a href="{{ route('front.details',$fundraising) }}" class="card">
                         <div class="w-full border border-[#E8E9EE] flex items-center p-[14px] gap-3 rounded-2xl bg-white">
                             <div class="w-20 h-[90px] flex shrink-0 rounded-2xl overflow-hidden">
                                 <img src="{{ Storage::url($fundraising->thumbnail) }}"
