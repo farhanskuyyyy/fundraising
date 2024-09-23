@@ -38,7 +38,7 @@ class RoleController extends Controller
             $validated = $request->validated();
             $role = Role::create($validated);
 
-            if (count($request->permissions) > 0) {
+            if (!empty($request->permissions)) {
                 foreach ($request->permissions as $key => $permission) {
                     $role->givePermissionTo($permission);
                 }
@@ -76,7 +76,7 @@ class RoleController extends Controller
             $validated = $request->validated();
             $role->update($validated);
 
-            if (count($request->permissions) > 0) {
+            if (!empty($request->permissions)) {
                 $role->syncPermissions($request->permissions);
             }else{
                 $role->syncPermissions([]);
