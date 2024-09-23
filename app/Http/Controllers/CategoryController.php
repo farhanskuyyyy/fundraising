@@ -8,16 +8,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class CategoryController extends Controller
+class CategoryController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array {
+        return [
+            new Middleware('permission:view categories',['index']),
+            new Middleware('permission:edit categories',['edit','update']),
+            new Middleware('permission:create categories',['create','store']),
+            new Middleware('permission:destroy categories',['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $categories = Category::all();
-        return view('admin.categories.index',compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -33,12 +44,12 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        DB::transaction(function() use($request){
+        DB::transaction(function () use ($request) {
             $validated = $request->validated();
             if ($request->hasFile('icon')) {
-                $iconPath = $request->file('icon')->store('icons','public');
+                $iconPath = $request->file('icon')->store('icons', 'public');
                 $validated['icon'] = $iconPath;
-            }else{
+            } else {
                 $iconPath = 'images/default-images.png';
                 $validated['icon'] = $iconPath;
             }
@@ -63,7 +74,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.categories.edit',compact('category'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -71,10 +82,10 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        DB::transaction(function() use($request,$category){
+        DB::transaction(function () use ($request, $category) {
             $validated = $request->validated();
             if ($request->hasFile('icon')) {
-                $iconPath = $request->file('icon')->store('icons','public');
+                $iconPath = $request->file('icon')->store('icons', 'public');
                 $validated['icon'] = $iconPath;
             }
             $validated['slug'] = Str::slug($validated['name']);

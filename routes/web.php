@@ -27,10 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::resource('permissions', PermissionController::class)->middleware('role:owner');
-        Route::resource('users', UserController::class)->middleware('role:owner');
-        Route::resource('roles', RoleController::class)->middleware('role:owner');
-        Route::resource('categories', CategoryController::class)->middleware('role:owner');
+        Route::resource('permissions', PermissionController::class);
+        Route::resource('users', UserController::class);
+        Route::resource('roles', RoleController::class);
+        Route::resource('categories', CategoryController::class);
 
         Route::resource('donaturs', DonaturController::class)->middleware('role:owner');
 

@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use Spatie\Permission\Models\Role;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class UserController extends Controller
+class UserController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array {
+        return [
+            new Middleware('permission:view users',['index']),
+            new Middleware('permission:edit users',['edit','update']),
+            new Middleware('permission:create users',['create','store']),
+            new Middleware('permission:destroy users',['destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

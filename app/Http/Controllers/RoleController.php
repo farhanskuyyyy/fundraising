@@ -8,9 +8,19 @@ use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class RoleController extends Controller
+class RoleController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array {
+        return [
+            new Middleware('permission:view roles',['index']),
+            new Middleware('permission:edit roles',['edit','update']),
+            new Middleware('permission:create roles',['create','store']),
+            new Middleware('permission:destroy roles',['destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
