@@ -11,6 +11,7 @@ use App\Http\Controllers\FundraisingController;
 use App\Http\Controllers\FundraisingPhaseController;
 use App\Http\Controllers\FundraisingWithdrawalController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
 Route::get('/category/{category}', [FrontController::class, 'category'])->name('front.category');
@@ -26,6 +27,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('permissions', PermissionController::class)->middleware('role:owner');
+        Route::resource('roles', RoleController::class)->middleware('role:owner');
         Route::resource('categories', CategoryController::class)->middleware('role:owner');
 
         Route::resource('donaturs', DonaturController::class)->middleware('role:owner');
