@@ -47,8 +47,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/fundraisings/active/{fundraising}', [FundraisingController::class, 'active_fundraising'])->middleware('role:owner')->name('fundraisings.active_fundraising');
 
         Route::post('/fundraiser/apply', [DashboardController::class, 'apply_fundraiser'])->name('fundraiser.apply');
-        Route::get('/my-withdrawals', [DashboardController::class, 'my_withdrawals'])->name('my-withdrawals');
-        Route::get('/my-withdrawals/details/{fundraisingWithdrawal}', [DashboardController::class, 'my_withdrawals_details'])->name('my-withdrawals.details');
+        Route::get('/my_withdrawals', [DashboardController::class, 'my_withdrawals'])->name('my_withdrawals');
+        Route::get('/my_withdrawals/details/{fundraisingWithdrawal}', [DashboardController::class, 'my_withdrawals_details'])->name('my_withdrawals.details');
     });
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
