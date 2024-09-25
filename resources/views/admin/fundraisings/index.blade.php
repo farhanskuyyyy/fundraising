@@ -41,7 +41,7 @@
     </x-slot>
 
     <div class="pt-6">
-        <div class="max-w-7xl">
+        <div class="w-full">
             <table id="categories-table">
                 <thead>
                     <tr>
@@ -72,6 +72,11 @@
                         </th>
                         <th>
                             <span class="flex items-center">
+                                Status
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
                                 Action
                             </span>
                         </th>
@@ -86,7 +91,39 @@
                             <td>Rp. {{ number_format($fundraising->target_amount, 0, ',', '.') }}</td>
                             <td>{{ $fundraising->donaturs->count() }}</td>
                             <td>{{ $fundraising->fundraiser->user->name }}</td>
+                            <td>
+                                @if ($fundraising->is_active)
+                                    @if ($fundraising->has_finished)
+                                        <span class="text-white font-bold bg-green-500 rounded-2xl px-3 py-2">
+                                            FundsDone
+                                        </span>
+                                    @else
+                                        <span class="text-white font-bold bg-green-500 rounded-2xl px-3 py-2">
+                                            Active
+                                        </span>
+                                    @endif
+                                @else
+                                    <div class="flex flex-row justify-between">
+                                        <span class="text-white font-bold bg-yellow-500 rounded-2xl px-3 py-2">
+                                            Pending
+                                        </span>
+                                    </div>
+                                @endif
+                            </td>
                             <td class="md:flex flex-row items-center gap-x-3">
+                                @if (!$fundraising->is_active)
+                                    @canany('approve fundraisings')
+                                        <form
+                                            action="{{ route('admin.fundraisings.active_fundraising', ['fundraising' => $fundraising]) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-green-500 hover:bg-green-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                                Approve Now
+                                            </button>
+                                        </form>
+                                    @endcanany
+                                @endif
                                 <a href="{{ route('admin.fundraisings.edit', ['fundraising' => $fundraising]) }}"
                                     class="inline-flex items-center justify-center mt-5  px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
                                     Edit
@@ -95,6 +132,16 @@
                                     class="inline-flex items-center justify-center mt-5  px-3 py-2 text-sm font-medium text-center text-white bg-sky-500 hover:bg-sky-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
                                     View
                                 </a>
+                                <form
+                                    action="{{ route('admin.fundraisings.destroy', ['fundraising' => $fundraising]) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-red-500 hover:bg-red-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                        Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @empty

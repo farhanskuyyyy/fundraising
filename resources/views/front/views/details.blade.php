@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                         @empty
-                            <p>No Data Found</p>
+                            <p class="dark:text-white">No Data Found</p>
                         @endforelse
                     </div>
                 </div>

@@ -43,7 +43,7 @@
         <hr class="my-2">
     </x-slot>
 
-    <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 mt-4">
+    <div class="px-3 mt-4">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
             <div class="item-card flex flex-col gap-y-10 md:flex-row justify-start gap-x-10 items-center">
 

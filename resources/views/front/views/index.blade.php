@@ -43,7 +43,7 @@
                         </a>
                     </div>
                 @empty
-                    <p>Data Not Found</p>
+                    <p class="dark:text-white">No Data Found</p>
                 @endforelse
             </div>
         </div>
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 @empty
-                    <p>Data Not Found</p>
+                    <p class="dark:text-white">No Data Found</p>
                 @endforelse
             </div>
         </div>
@@ -106,7 +106,7 @@
                         </div>
                     </a>
                 @empty
-                    <p>Data Not Found</p>
+                    <p class="dark:text-white">No Data Found</p>
                 @endforelse
             </div>
         </div>

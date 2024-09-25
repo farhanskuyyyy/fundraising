@@ -42,7 +42,7 @@
                     </div>
                 </a>
             @empty
-                <p>Data Not Found</p>
+                <p class="dark:text-white">No Data Found</p>
             @endforelse
         </div>
     </section>

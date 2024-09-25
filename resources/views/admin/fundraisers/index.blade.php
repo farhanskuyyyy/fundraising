@@ -32,7 +32,7 @@
     </x-slot>
     @role('owner')
         <div class="pt-12">
-            <div class="max-w-7xl">
+            <div class="w-full">
                 <table id="categories-table">
                     <thead>
                         <tr>

@@ -41,7 +41,7 @@
     </x-slot>
 
     <div class="pt-6">
-        <div class="max-w-7xl">
+        <div class="w-full">
             <table id="categories-table">
                 <thead>
                     <tr>
