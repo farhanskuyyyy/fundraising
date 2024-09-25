@@ -43,7 +43,7 @@
         <hr class="my-2">
     </x-slot>
 
-    <div class="py-12">
+    <div class="pt-6">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
                 <div class="flex flex-row gap-x-16 justify-center">

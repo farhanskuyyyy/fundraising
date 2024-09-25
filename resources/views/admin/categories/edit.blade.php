@@ -43,7 +43,7 @@
         <hr class="my-2">
     </x-slot>
 
-    <div class="py-12">
+    <div class="pt-6">
         <div class="max-w-3xl mx-3">
                 @if($errors->any())
                     @foreach($errors->all() as $error)

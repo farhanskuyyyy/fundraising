@@ -40,7 +40,7 @@
         <hr class="my-2">
     </x-slot>
 
-    <div class="py-12">
+    <div class="pt-6">
         <div class="max-w-7xl">
             <table id="categories-table">
                 <thead>
@@ -80,16 +80,16 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ count($user->roles) > 0 ? $user->roles->pluck('name')->implode(',') : 'No Role' }}</td>
                             <td>{{ date('d M Y', strtotime($user->created_at)) }}</td>
-                            <td class="hidden md:flex flex-row items-center gap-x-3">
+                            <td class="md:flex flex-row items-center gap-x-3">
                                 <a href="{{ route('admin.users.edit', ['user' => $user]) }}"
-                                    class="inline-flex items-center justify-center mt-6 w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                    class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
                                     Edit
                                 </a>
                                 <form action="{{ route('admin.users.destroy', ['user' => $user]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="inline-flex items-center justify-center mt-6 w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-red-500 hover:bg-red-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                        class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-red-500 hover:bg-red-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
                                         Delete
                                     </button>
                                 </form>

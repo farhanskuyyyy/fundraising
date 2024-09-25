@@ -43,7 +43,7 @@
         <hr class="my-2">
     </x-slot>
 
-    <div class="py-12">
+    <div class="pt-6">
         <div class="max-w-3xl mx-3">
             @if ($errors->any())
                 @foreach ($errors->all() as $error)
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <x-input-label for="icon" :value="__('icon')" />
+                    <x-input-label for="icon" :value="__('Icon')" />
                     <x-text-input id="icon" class="block mt-1 w-full" type="file" name="icon" required
                         autofocus autocomplete="icon" />
                     <x-input-error :messages="$errors->get('icon')" class="mt-2" />

@@ -85,25 +85,25 @@
                                 </td>
                                 <td class="">
                                     @if ($fundraiser->is_active)
-                                        <div class="hidden md:flex flex-row items-center gap-x-3">
+                                        <div class="md:flex flex-row items-center gap-x-3">
                                             <form action="#" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-red-500 hover:bg-red-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                                    class="inline-flex items-center justify-center  px-3 py-2 text-sm font-medium text-center text-white bg-red-500 hover:bg-red-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
                                                     Delete
                                                 </button>
                                             </form>
                                         </div>
                                     @else
-                                        <div class="hidden md:flex flex-row items-center gap-x-3">
+                                        <div class="md:flex flex-row items-center gap-x-3">
                                             <form
                                                 action="{{ route('admin.fundraisers.update', ['fundraiser' => $fundraiser]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit"
-                                                    class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                                    class="inline-flex items-center justify-center  px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
                                                     Approve
                                                 </button>
                                             </form>
@@ -133,12 +133,12 @@
                             </span>
                         @elseif($fundraiserStatus == 'Active')
                             <a href="{{ route('admin.fundraisings.create') }}"
-                                class="inline-flex items-center justify-center mt-6 w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">Create a
+                                class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">Create a
                                 Fundraising</a>
                         @else
                             <form action="{{ route('admin.fundraiser.apply') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="inline-flex items-center justify-center mt-6 w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                <button type="submit" class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
                                     Become Fundraiser
                                 </button>
                             </form>

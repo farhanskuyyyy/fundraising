@@ -43,7 +43,7 @@
         <hr class="my-2">
     </x-slot>
 
-    <div class="py-12">
+    <div class="pt-6">
         <div class="max-w-5xl">
             <div class="overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
 

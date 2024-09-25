@@ -32,7 +32,7 @@
         <hr class="my-2">
     </x-slot>
 
-    <div class="py-12">
+    <div class="pt-6">
         <div class="max-w-7xl">
             <table id="categories-table">
                 <thead>
@@ -90,9 +90,9 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="hidden md:flex flex-row items-center gap-x-3">
+                            <td class="md:flex flex-row items-center gap-x-3">
                                 <a href="{{ route('admin.my_withdrawals.details', $withdrawal) }}"
-                                    class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                    class="inline-flex items-center justify-center  px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
                                     Details
                                 </a>
                             </td>
