@@ -1,49 +1,97 @@
 <x-app-layout>
+    <x-slot name="breadcrumb">
+        <nav class="flex mb-5" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                <li class="inline-flex items-center">
+                    <a href="{{ route('dashboard') }}"
+                        class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <a href="#"
+                            class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Roles</a>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+    </x-slot>
     <x-slot name="header">
-        <div class="flex flex-row justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Manage Roles') }}
-            </h2>
-            <a href="{{ route('admin.roles.create') }}" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
-                Add New
-            </a>
+        <div class="sm:flex">
+            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+                {{ __('Manage Roles') }}</h1>
+            @can('create roles')
+                <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
+                    <a href="{{ route('admin.roles.create') }}"
+                        class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-green-500 hover:bg-green-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                        <i class="fa-solid fa-plus mr-2"></i>
+                        Add Role
+                    </a>
+                </div>
+            @endcan
         </div>
+        <hr class="my-2">
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
-                @forelse ($roles as $role)
-                    <div class="item-card flex flex-row justify-between items-center">
-                        <div class="hidden md:flex flex-col">
-                            <p class="text-slate-500 text-sm">Name</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">{{ $role->name }}</h3>
-                        </div>
-                        <div class="hidden md:flex flex-col">
-                            <p class="text-slate-500 text-sm">Date</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">{{ date('d M Y',strtotime($role->created_at)) }}</h3>
-                        </div>
-                        <div class="hidden md:flex flex-col">
-                            <p class="text-slate-500 text-sm">Permission</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">{{ (count($role->permissions) > 0) ? $role->permissions->pluck('name')->implode(',') : 'No Permission' }}</h3>
-                        </div>
-                        <div class="hidden md:flex flex-row items-center gap-x-3">
-                            <a href="{{ route('admin.roles.edit',['role' => $role]) }}" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
-                                Edit
-                            </a>
-                            <form action="{{ route('admin.roles.destroy',['role' => $role]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="font-bold py-4 px-6 bg-red-700 text-white rounded-full">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @empty
-                    <p class="text-danger">Data Not Found</p>
-                @endforelse
-            </div>
+        <div class="max-w-7xl">
+            <table id="categories-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <span class="flex items-center">
+                                Name
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                Permissions
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                Created Date
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                Action
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($roles as $role)
+                        <tr>
+                            <td>{{ $role->name }}</td>
+                            <td>{{ (count($role->permissions) > 0) ? $role->permissions->pluck('name')->implode(',') : 'No Permission' }}</td>
+                            <td>{{ date('d M Y', strtotime($role->created_at)) }}</td>
+                            <td class="hidden md:flex flex-row items-center gap-x-3">
+                                <a href="{{ route('admin.roles.edit', ['role' => $role]) }}"
+                                    class="inline-flex items-center justify-center mt-6 w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                    Edit
+                                </a>
+                                <form action="{{ route('admin.roles.destroy', ['role' => $role]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="inline-flex items-center justify-center mt-6 w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-red-500 hover:bg-red-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
 </x-app-layout>

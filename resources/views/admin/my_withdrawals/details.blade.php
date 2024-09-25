@@ -1,84 +1,110 @@
 <x-app-layout>
+    <x-slot name="breadcrumb">
+        <nav class="flex mb-5" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                <li class="inline-flex items-center">
+                    <a href="{{ route('dashboard') }}"
+                        class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <a href="{{ route('admin.my_withdrawals') }}"
+                            class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">My
+                            Withdrawals</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <a href="#"
+                            class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Show</a>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+    </x-slot>
     <x-slot name="header">
-        <div class="flex flex-row justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Withdrawal Informations') }}
-            </h2>
+        <div class="sm:flex">
+            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+                {{ __('Withdrawals Detail') }}</h1>
         </div>
+        <hr class="my-2">
     </x-slot>
 
-    <div class="py-12">
+    <div class="pt-4">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
-                <h3 class="text-indigo-950 text-3xl font-bold mb-5">My Request</h3>
-                <div class="flex flex-row gap-x-16">
-                    <svg width="100" height="100" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.4"
-                            d="M19 10.2798V17.4298C18.97 20.2798 18.19 20.9998 15.22 20.9998H5.78003C2.76003 20.9998 2 20.2498 2 17.2698V10.2798C2 7.5798 2.63 6.7098 5 6.5698C5.24 6.5598 5.50003 6.5498 5.78003 6.5498H15.22C18.24 6.5498 19 7.2998 19 10.2798Z"
-                            fill="#292D32" />
-                        <path
-                            d="M22 6.73V13.72C22 16.42 21.37 17.29 19 17.43V10.28C19 7.3 18.24 6.55 15.22 6.55H5.78003C5.50003 6.55 5.24 6.56 5 6.57C5.03 3.72 5.81003 3 8.78003 3H18.22C21.24 3 22 3.75 22 6.73Z"
-                            fill="#292D32" />
-                        <path
-                            d="M6.96027 18.5601H5.24023C4.83023 18.5601 4.49023 18.2201 4.49023 17.8101C4.49023 17.4001 4.83023 17.0601 5.24023 17.0601H6.96027C7.37027 17.0601 7.71027 17.4001 7.71027 17.8101C7.71027 18.2201 7.38027 18.5601 6.96027 18.5601Z"
-                            fill="#292D32" />
-                        <path
-                            d="M12.5494 18.5601H9.10938C8.69938 18.5601 8.35938 18.2201 8.35938 17.8101C8.35938 17.4001 8.69938 17.0601 9.10938 17.0601H12.5494C12.9594 17.0601 13.2994 17.4001 13.2994 17.8101C13.2994 18.2201 12.9694 18.5601 12.5494 18.5601Z"
-                            fill="#292D32" />
-                        <path d="M19 11.8599H2V13.3599H19V11.8599Z" fill="#292D32" />
-                    </svg>
+            <div class=" overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
+                <h3 class="text-indigo-950 text-3xl font-bold mb-5 text-center dark:text-white">My Request</h3>
+                <div class="flex flex-row gap-x-16 justify-center">
                     <div class="flex flex-col gap-y-10">
                         <div>
-                            <p class="text-slate-500 text-sm">Total Amount</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">Rp
+                            <p class="text-slate-500 text-sm dark:text-white">Total Amount</p>
+                            <h3 class="text-indigo-950 text-xl font-bold dark:text-white">Rp
                                 {{ number_format($fundraisingWithdrawal->amount_requested, 0, ',', '.') }}</h3>
                         </div>
-                        @if ($fundraisingWithdrawal->has_sent)
-                            @if ($fundraisingWithdrawal->has_received)
-                                <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white">
-                                    DELIVERED
-                                </span>
+                        <div>
+                            <p class="text-slate-500 text-sm dark:text-white mb-2">Status</p>
+                            @if ($fundraisingWithdrawal->has_sent)
+                                @if ($fundraisingWithdrawal->has_received)
+                                    <span
+                                        class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white">
+                                        DELIVERED
+                                    </span>
+                                @else
+                                    <span
+                                        class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-indigo-500 text-white">
+                                        PROCESSING
+                                    </span>
+                                @endif
                             @else
-                                <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-indigo-500 text-white">
-                                    PROCESSING
+                                <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-orange-500 text-white">
+                                    PENDING
                                 </span>
                             @endif
-                        @else
-                            <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-orange-500 text-white">
-                                PENDING
-                            </span>
-                        @endif
+                        </div>
                         <div>
-                            <p class="text-slate-500 text-sm">Date</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">
+                            <p class="text-slate-500 text-sm dark:text-white">Date</p>
+                            <h3 class="text-indigo-950 text-xl font-bold dark:text-white">
                                 {{ date('d M Y', strtotime($fundraisingWithdrawal->created_at)) }}</h3>
                         </div>
                     </div>
                     <div>
                         <img src="{{ Storage::url($fundraisingWithdrawal->fundraising->thumbnail) }}" alt=""
                             class="rounded-2xl object-cover w-[300px] h-[200px] mb-3">
-                        <h3 class="text-indigo-950 text-xl font-bold">{{ $fundraisingWithdrawal->fundraising->name }}
+                        <h3 class="text-indigo-950 text-xl font-bold dark:text-white">{{ $fundraisingWithdrawal->fundraising->name }}
                         </h3>
-                        <p class="text-slate-500 text-sm">{{ $fundraisingWithdrawal->fundraising->category->name }}</p>
+                        <p class="text-slate-500 text-sm dark:text-white">{{ $fundraisingWithdrawal->fundraising->category->name }}</p>
                     </div>
                 </div>
                 @if ($fundraisingWithdrawal->has_sent)
                     <hr class="my-5">
-                    <h3 class="text-indigo-950 text-xl font-bold mb-5">Sent to:</h3>
+                    <h3 class="text-indigo-950 text-xl font-bold mb-5 dark:text-white">Sent to:</h3>
                     <div class="flex flex-row gap-x-10">
                         <div>
-                            <p class="text-slate-500 text-sm">Bank</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">{{ $fundraisingWithdrawal->bank_name }}</h3>
+                            <p class="text-slate-500 text-sm dark:text-white">Bank</p>
+                            <h3 class="text-indigo-950 text-xl font-bold dark:text-white">{{ $fundraisingWithdrawal->bank_name }}</h3>
                         </div>
                         <div>
-                            <p class="text-slate-500 text-sm">No Account</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">
+                            <p class="text-slate-500 text-sm dark:text-white">No Account</p>
+                            <h3 class="text-indigo-950 text-xl font-bold dark:text-white">
                                 {{ $fundraisingWithdrawal->bank_account_number }}</h3>
                         </div>
                         <div>
-                            <p class="text-slate-500 text-sm">Account Name</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">
+                            <p class="text-slate-500 text-sm dark:text-white">Account Name</p>
+                            <h3 class="text-indigo-950 text-xl font-bold dark:text-white">
                                 {{ $fundraisingWithdrawal->bank_account_name }}</h3>
                         </div>
                         {{-- <div>
@@ -87,12 +113,12 @@
                     </div> --}}
                     </div>
                     <hr class="my-5">
-                    <h3 class="text-indigo-950 text-xl font-bold mb-5">Uang Sudah Dikirim</h3>
+                    <h3 class="text-indigo-950 text-xl font-bold mb-5 dark:text-white">Uang Sudah Dikirim</h3>
                     <img src="{{ Storage::url($fundraisingWithdrawal->proof) }}" alt=""
                         class="rounded-2xl object-cover w-[300px] h-[200px] mb-3">
                     @if (!$fundraisingWithdrawal->has_received)
                         <hr class="my-5">
-                        <h3 class="text-indigo-950 text-xl font-bold">Have You Delivered Money?</h3>
+                        <h3 class="text-indigo-950 text-xl font-bold dark:text-white">Have You Delivered Money?</h3>
                         <form
                             action="{{ route('admin.fundraising_phases.store', $fundraisingWithdrawal->fundraising_id) }}"
                             enctype="multipart/form-data" method="POST">
@@ -121,7 +147,7 @@
                     @else
                         <hr class="my-5">
                         @foreach ($fundraisingWithdrawal->fundraising->phases as $phase)
-                            <h3 class="text-indigo-950 text-xl font-bold mb-5">Uang Sudah Diterima Korban</h3>
+                            <h3 class="text-indigo-950 text-xl font-bold mb-5 dark:text-white">Uang Sudah Diterima Korban</h3>
                             <img src="{{ Storage::url($phase->photo) }}" alt=""
                                 class="rounded-2xl object-cover w-[300px] h-[200px] mb-3">
                         @endforeach

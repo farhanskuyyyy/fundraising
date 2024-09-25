@@ -59,3 +59,14 @@ themeToggleBtn.addEventListener("click", function () {
         }
     }
 });
+
+if (
+    document.getElementById("categories-table") &&
+    typeof simpleDatatables.DataTable !== "undefined"
+) {
+    const dataTable = new simpleDatatables.DataTable("#categories-table", {
+        searchable: true,
+        sortable: false,
+        sortable: true,
+    });
+}

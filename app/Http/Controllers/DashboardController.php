@@ -29,7 +29,11 @@ class DashboardController extends Controller
     public function my_withdrawals()
     {
         $user = Auth::user();
-        $withdrawals = FundraisingWithdrawal::with('fundraising')->where('fundraiser_id', $user->fundraiser->id)->get();
+        if ($user->hasRole('owner')) {
+            $withdrawals = FundraisingWithdrawal::with('fundraising')->get();
+        }else{
+            $withdrawals = FundraisingWithdrawal::with('fundraising')->where('fundraiser_id', $user->fundraiser->id)->get();
+        }
         return view('admin.my_withdrawals.index', compact('withdrawals'));
     }
 
