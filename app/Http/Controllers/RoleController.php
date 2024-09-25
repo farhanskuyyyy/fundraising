@@ -13,12 +13,13 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class RoleController extends Controller implements HasMiddleware
 {
-    public static function middleware(): array {
+    public static function middleware(): array
+    {
         return [
-            new Middleware('permission:view roles',['index']),
-            new Middleware('permission:edit roles',['edit','update']),
-            new Middleware('permission:create roles',['create','store']),
-            new Middleware('permission:destroy roles',['destroy']),
+            new Middleware('permission:view roles', ['index']),
+            new Middleware('permission:edit roles', ['edit', 'update']),
+            new Middleware('permission:create roles', ['create', 'store']),
+            new Middleware('permission:destroy roles', ['destroy']),
         ];
     }
     /**
@@ -35,8 +36,19 @@ class RoleController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        $permissions = Permission::get();
-        return view('admin.roles.create',compact('permissions'));
+        DB::statement("SET SQL_MODE=''");
+        $role_permission = Permission::select('name', 'id')->groupBy('name')->get();
+        $permissions = [];
+        foreach ($role_permission as $per) {
+
+            $name = explode(' ',$per->name)[1];
+            $key = substr($name, 0);
+
+            if (str_starts_with($name, $key)) {
+                $permissions[$key][] = $per;
+            }
+        }
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -71,10 +83,21 @@ class RoleController extends Controller implements HasMiddleware
      */
     public function edit(Role $role)
     {
-        $permissions = Permission::with(['roles' => function($q) use($role) {
-            $q->where('role_id',$role->id);
-        }])->get();
-        return view('admin.roles.edit', compact('role','permissions'));
+        DB::statement("SET SQL_MODE=''");
+        $role_permission = Permission::with(['roles' => function ($q) use ($role) {
+            $q->where('role_id', $role->id);
+        }])->groupBy('name')->get();
+        $permissions = [];
+        foreach ($role_permission as $per) {
+
+            $name = explode(' ',$per->name)[1];
+            $key = substr($name, 0);
+
+            if (str_starts_with($name, $key)) {
+                $permissions[$key][] = $per;
+            }
+        }
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -88,7 +111,7 @@ class RoleController extends Controller implements HasMiddleware
 
             if (!empty($request->permissions)) {
                 $role->syncPermissions($request->permissions);
-            }else{
+            } else {
                 $role->syncPermissions([]);
             }
         });

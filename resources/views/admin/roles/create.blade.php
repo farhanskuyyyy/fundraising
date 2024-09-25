@@ -63,19 +63,57 @@
                         :value="old('name')" required autofocus autocomplete="name" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
-                <div class="mt-4 grid grid-cols-3 gap-4">
-                    @forelse ($permissions as $permission)
-                        <div class="mb-4">
-                            <input id="permission-checkbox" type="checkbox" value="{{ $permission->name }}"
-                                name="permissions[]"
-                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="permission-checkbox"
-                                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $permission->name }}</label>
-                        </div>
-                    @empty
-                        <p>Permission Not Found</p>
-                    @endforelse
-                </div>
+                <table class="permissionTable rounded-m overflow-hidden my-4 p-4 text-center">
+                    <th class="px-4 py-4 text-slate-700 dark:text-white">
+                        {{ __('Section') }}
+                    </th>
+
+                    <th class="px-4 py-4">
+                        <input id="permission-checkbox" type="checkbox" value="" name="permissions[]"
+                            class="grand_selectall w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="permission-checkbox"
+                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('Select All') }}</label>
+                    </th>
+
+                    <th class="px-4 py-4 text-slate-700 dark:text-white">
+                        {{ __('Available permissions') }}
+                    </th>
+                    <tbody>
+                        @foreach ($permissions as $key => $group)
+                            <tr class="py-8">
+                                <td class="p-6">
+                                    <b class="text-slate-700 dark:text-white">{{ ucfirst(str_replace('_',' ',$key)) }}</b>
+                                </td>
+                                <td class="p-6" width="30%">
+                                    <input id="permission-checkbox" type="checkbox" value="" name="permissions[]"
+                                        class="selectall w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="permission-checkbox"
+                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                        {{ __('Select All') }}</label>
+                                </td>
+                                <td class="p-6">
+                                    <ul>
+                                        @forelse($group as $permission)
+                                            <li>
+                                                <div class="mb-4">
+                                                    <input id="permission-checkbox" type="checkbox"
+                                                        value="{{ $permission->name }}" name="permissions[]"
+                                                        class="permissioncheckbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                    <label for="permission-checkbox"
+                                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $permission->name }}</label>
+                                                </div>
+                                            </li>
+                                        @empty
+                                            {{ __('No permission in this group !') }}
+                                        @endforelse
+                                    </ul>
+
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
                 <div class="flex items-center justify-end mt-4">
 
@@ -86,4 +124,83 @@
             </form>
         </div>
     </div>
+    <x-slot name="after">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script>
+            $(function() {
+                calcu_allchkbox();
+                selectall();
+            });
+            $(".permissionTable").on('click', '.selectall', function() {
+                if ($(this).is(':checked')) {
+                    $(this).closest('tr').find('[type=checkbox]').prop('checked', true);
+                } else {
+                    $(this).closest('tr').find('[type=checkbox]').prop('checked', false);
+                }
+                calcu_allchkbox();
+            });
+            $(".permissionTable").on('click', '.grand_selectall', function() {
+                console.log('asds');
+                if ($(this).is(':checked')) {
+                    $('.selectall').prop('checked', true);
+                    $('.permissioncheckbox').prop('checked', true);
+                } else {
+                    $('.selectall').prop('checked', false);
+                    $('.permissioncheckbox').prop('checked', false);
+                }
+            });
+
+            function selectall() {
+                $('.selectall').each(function(i) {
+                    var allchecked = new Array();
+                    $(this).closest('tr').find('.permissioncheckbox').each(function(index) {
+                        if ($(this).is(":checked")) {
+                            allchecked.push(1);
+                        } else {
+                            allchecked.push(0);
+                        }
+                    });
+                    if ($.inArray(0, allchecked) != -1) {
+                        $(this).prop('checked', false);
+                    } else {
+                        $(this).prop('checked', true);
+                    }
+                });
+            }
+
+            function calcu_allchkbox() {
+                var allchecked = new Array();
+                $('.selectall').each(function(i) {
+                    $(this).closest('tr').find('.permissioncheckbox').each(function(index) {
+                        if ($(this).is(":checked")) {
+                            allchecked.push(1);
+                        } else {
+                            allchecked.push(0);
+                        }
+                    });
+                });
+                if ($.inArray(0, allchecked) != -1) {
+                    $('.grand_selectall').prop('checked', false);
+                } else {
+                    $('.grand_selectall').prop('checked', true);
+                }
+            }
+            $('.permissionTable').on('click', '.permissioncheckbox', function() {
+                var allchecked = new Array;
+                $(this).closest('tr').find('.permissioncheckbox').each(function(index) {
+                    if ($(this).is(":checked")) {
+                        allchecked.push(1);
+                    } else {
+                        allchecked.push(0);
+                    }
+                });
+                if ($.inArray(0, allchecked) != -1) {
+                    $(this).closest('tr').find('.selectall').prop('checked', false);
+                } else {
+                    $(this).closest('tr').find('.selectall').prop('checked', true);
+                }
+                calcu_allchkbox();
+            });
+        </script>
+    </x-slot>
 </x-app-layout>

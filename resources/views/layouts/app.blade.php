@@ -15,7 +15,6 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
-    @stack('script-top')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -53,6 +52,10 @@
                 Rights Reserved.</span>
         </div>
     </footer>
+
+    @isset($after)
+        {{ $after }}
+    @endisset
 </body>
 
 </html>
