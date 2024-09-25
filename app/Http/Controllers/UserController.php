@@ -19,6 +19,7 @@ class UserController extends Controller implements HasMiddleware
             new Middleware('permission:edit users',['edit','update']),
             new Middleware('permission:create users',['create','store']),
             new Middleware('permission:destroy users',['destroy']),
+            new Middleware('permission:show users',['show']),
         ];
     }
     /**

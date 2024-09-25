@@ -31,24 +31,23 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('roles', RoleController::class);
         Route::resource('categories', CategoryController::class);
-
         Route::resource('donaturs', DonaturController::class)->middleware('role:owner');
 
-        Route::resource('fundraisers', FundraiserController::class)->middleware('role:owner');
+        Route::resource('fundraisers', FundraiserController::class);
         Route::get('fundraisers', [FundraiserController::class, 'index'])->name('fundraisers.index');
 
-        Route::resource('fundraising_withdrawals', FundraisingWithdrawalController::class)->middleware('role:owner|fundraiser');
-        Route::post('/fundraising_withdrawals/request/{fundraising}', [FundraisingWithdrawalController::class, 'store'])->middleware('role:fundraiser')->name('fundraising_withdrawals.store');
+        Route::resource('fundraising_withdrawals', FundraisingWithdrawalController::class);
+        Route::post('/fundraising_withdrawals/request/{fundraising}', [FundraisingWithdrawalController::class, 'store'])->name('fundraising_withdrawals.store');
 
-        Route::resource('fundraising_phases', FundraisingPhaseController::class)->middleware('role:owner|fundraiser');
-        Route::post('/fundraising_phases/update/{fundraising}', [FundraisingPhaseController::class, 'store'])->middleware('role:fundraiser')->name('fundraising_phases.store');
+        Route::resource('fundraising_phases', FundraisingPhaseController::class);
+        Route::post('/fundraising_phases/update/{fundraising}', [FundraisingPhaseController::class, 'store'])->name('fundraising_phases.store');
 
-        Route::resource('fundraisings', FundraisingController::class)->middleware('role:owner|fundraiser');
-        Route::post('/fundraisings/active/{fundraising}', [FundraisingController::class, 'active_fundraising'])->middleware('role:owner')->name('fundraisings.active_fundraising');
+        Route::resource('fundraisings', FundraisingController::class);
+        Route::post('/fundraisings/active/{fundraising}', [FundraisingController::class, 'activeFundraising'])->name('fundraisings.active_fundraising');
 
-        Route::post('/fundraiser/apply', [DashboardController::class, 'apply_fundraiser'])->name('fundraiser.apply');
-        Route::get('/my_withdrawals', [DashboardController::class, 'my_withdrawals'])->name('my_withdrawals');
-        Route::get('/my_withdrawals/details/{fundraisingWithdrawal}', [DashboardController::class, 'my_withdrawals_details'])->name('my_withdrawals.details');
+        Route::post('/fundraiser/apply', [DashboardController::class, 'applyFundraiser'])->name('fundraiser.apply');
+        Route::get('/my_withdrawals', [DashboardController::class, 'myWithdrawals'])->name('my_withdrawals');
+        Route::get('/my_withdrawals/details/{fundraisingWithdrawal}', [DashboardController::class, 'myWithdrawalsDetails'])->name('my_withdrawals.details');
     });
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

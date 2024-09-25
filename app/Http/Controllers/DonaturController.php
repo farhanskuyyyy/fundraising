@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Donatur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class DonaturController extends Controller
+class DonaturController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array {
+        return [
+            new Middleware('permission:view donaturs',['index']),
+            new Middleware('permission:edit donaturs',['edit','update']),
+            new Middleware('permission:create donaturs',['create','store']),
+            new Middleware('permission:destroy donaturs',['destroy']),
+            new Middleware('permission:show donaturs',['show']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

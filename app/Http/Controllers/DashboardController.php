@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Donatur;
+use App\Models\Category;
 use App\Models\Fundraiser;
 use App\Models\Fundraising;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FundraisingWithdrawal;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class DashboardController extends Controller
+class DashboardController extends Controller implements HasMiddleware
 {
-    public function apply_fundraiser()
+    public static function middleware(): array {
+        return [
+            new Middleware('permission:view dashboard',['index']),
+            new Middleware('permission:view my_withdrawals',['myWithdrawals']),
+            new Middleware('permission:show my_withdrawals',['myWithdrawalsDetails']),
+        ];
+    }
+
+    public function applyFundraiser()
     {
         $user = Auth::user();
         DB::transaction(function () use ($user) {
@@ -26,7 +36,7 @@ class DashboardController extends Controller
         return redirect()->route('admin.fundraisers.index');
     }
 
-    public function my_withdrawals()
+    public function myWithdrawals()
     {
         $user = Auth::user();
         if ($user->hasRole('owner')) {
@@ -37,7 +47,7 @@ class DashboardController extends Controller
         return view('admin.my_withdrawals.index', compact('withdrawals'));
     }
 
-    public function my_withdrawals_details(FundraisingWithdrawal $fundraisingWithdrawal)
+    public function myWithdrawalsDetails(FundraisingWithdrawal $fundraisingWithdrawal)
     {
         return view('admin.my_withdrawals.details', compact('fundraisingWithdrawal'));
     }

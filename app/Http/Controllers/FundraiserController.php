@@ -6,9 +6,22 @@ use App\Models\Fundraiser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class FundraiserController extends Controller
+class FundraiserController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            // new Middleware('permission:view fundraisers', ['index']),
+            new Middleware('permission:edit fundraisers', ['edit', 'update']),
+            new Middleware('permission:create fundraisers', ['create', 'store']),
+            new Middleware('permission:destroy fundraisers', ['destroy']),
+            new Middleware('permission:show fundraisers', ['show']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

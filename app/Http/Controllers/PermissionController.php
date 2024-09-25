@@ -19,6 +19,7 @@ class PermissionController extends Controller implements HasMiddleware
             new Middleware('permission:edit permissions', ['edit', 'update']),
             new Middleware('permission:create permissions', ['create', 'store']),
             new Middleware('permission:destroy permissions', ['destroy']),
+            new Middleware('permission:show permissions', ['show']),
         ];
     }
     /**

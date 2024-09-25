@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreFundraisingRequest;
-use App\Http\Requests\UpdateFundraisingRequest;
 use App\Models\Category;
 use App\Models\Fundraiser;
 use App\Models\Fundraising;
@@ -11,9 +9,24 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreFundraisingRequest;
+use Illuminate\Routing\Controllers\Middleware;
+use App\Http\Requests\UpdateFundraisingRequest;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class FundraisingController extends Controller
+class FundraisingController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array {
+        return [
+            new Middleware('permission:view fundraisings',['index']),
+            new Middleware('permission:edit fundraisings',['edit','update']),
+            new Middleware('permission:create fundraisings',['create','store']),
+            new Middleware('permission:destroy fundraisings',['destroy']),
+            new Middleware('permission:show fundraisings',['show']),
+            new Middleware('permission:approve fundraisings',['activeFundraising']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -126,7 +139,7 @@ class FundraisingController extends Controller
         return redirect()->route('admin.fundraisings.index');
     }
 
-    public function active_fundraising(Fundraising $fundraising)
+    public function activeFundraising(Fundraising $fundraising)
     {
         DB::transaction(function () use ($fundraising) {
             $fundraising->update([

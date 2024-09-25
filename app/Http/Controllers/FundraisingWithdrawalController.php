@@ -7,11 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FundraisingWithdrawal;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Http\Requests\StoreFundraisingWithdrawalRequest;
 use App\Http\Requests\UpdateFundraisingWithdrawalRequest;
 
-class FundraisingWithdrawalController extends Controller
+class FundraisingWithdrawalController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array {
+        return [
+            new Middleware('permission:view fundraising_withdrawals',['index']),
+            new Middleware('permission:edit fundraising_withdrawals',['edit','update']),
+            new Middleware('permission:create fundraising_withdrawals',['create','store']),
+            new Middleware('permission:destroy fundraising_withdrawals',['destroy']),
+            new Middleware('permission:show fundraising_withdrawals',['show']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

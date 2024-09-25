@@ -6,11 +6,23 @@ use App\Models\Fundraising;
 use Illuminate\Http\Request;
 use App\Models\FundraisingPhase;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\StoreFundraisingPhaseRequest;
 use App\Models\FundraisingWithdrawal;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Http\Requests\StoreFundraisingPhaseRequest;
 
-class FundraisingPhaseController extends Controller
+class FundraisingPhaseController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array {
+        return [
+            new Middleware('permission:view fundraising_phases',['index']),
+            new Middleware('permission:edit fundraising_phases',['edit','update']),
+            new Middleware('permission:create fundraising_phases',['create','store']),
+            new Middleware('permission:destroy fundraising_phases',['destroy']),
+            new Middleware('permission:show fundraising_phases',['show']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
