@@ -18,7 +18,7 @@ class CategoryController extends Controller implements HasMiddleware
             new Middleware('permission:view categories',['index']),
             new Middleware('permission:edit categories',['edit','update']),
             new Middleware('permission:create categories',['create','store']),
-            new Middleware('permission:destroy categories',['destroy']),
+            new Middleware('permission:delete categories',['destroy']),
             new Middleware('permission:show categories',['show']),
         ];
     }
@@ -59,7 +59,7 @@ class CategoryController extends Controller implements HasMiddleware
             $category = Category::create($validated);
         });
 
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.categories.index')->with('success','Success Created');
     }
 
     /**
@@ -94,7 +94,7 @@ class CategoryController extends Controller implements HasMiddleware
             $category->update($validated);
         });
 
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.categories.index')->with('success','Success Updated');
     }
 
     /**
@@ -109,6 +109,6 @@ class CategoryController extends Controller implements HasMiddleware
         } catch (\Throwable $th) {
             DB::rollBack();
         }
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.categories.index')->with('success','Success Deleted');
     }
 }

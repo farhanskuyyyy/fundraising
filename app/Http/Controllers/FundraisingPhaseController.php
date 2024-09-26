@@ -18,7 +18,7 @@ class FundraisingPhaseController extends Controller implements HasMiddleware
             new Middleware('permission:view fundraising_phases',['index']),
             new Middleware('permission:edit fundraising_phases',['edit','update']),
             new Middleware('permission:create fundraising_phases',['create','store']),
-            new Middleware('permission:destroy fundraising_phases',['destroy']),
+            new Middleware('permission:delete fundraising_phases',['destroy']),
             new Middleware('permission:show fundraising_phases',['show']),
         ];
     }
@@ -64,7 +64,7 @@ class FundraisingPhaseController extends Controller implements HasMiddleware
             ]);
         });
 
-        return redirect()->route('admin.fundraising_withdrawals.index');
+        return redirect()->route('admin.fundraising_withdrawals.index')->with('success','Success Created');;
     }
 
     /**

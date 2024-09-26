@@ -19,7 +19,7 @@ class RoleController extends Controller implements HasMiddleware
             new Middleware('permission:view roles', ['index']),
             new Middleware('permission:edit roles', ['edit', 'update']),
             new Middleware('permission:create roles', ['create', 'store']),
-            new Middleware('permission:destroy roles', ['destroy']),
+            new Middleware('permission:delete roles', ['destroy']),
             new Middleware('permission:show roles', ['show']),
         ];
     }
@@ -68,7 +68,7 @@ class RoleController extends Controller implements HasMiddleware
             }
         });
 
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('admin.roles.index')->with('success','Success Created');;
     }
 
     /**
@@ -117,7 +117,7 @@ class RoleController extends Controller implements HasMiddleware
             }
         });
 
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('admin.roles.index')->with('success','Success Updated');;
     }
 
     /**
@@ -132,6 +132,6 @@ class RoleController extends Controller implements HasMiddleware
         } catch (\Throwable $th) {
             DB::rollBack();
         }
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('admin.roles.index')->with('success','Success Deleted');;
     }
 }

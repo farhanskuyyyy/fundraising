@@ -15,9 +15,10 @@ class FundraiserController extends Controller implements HasMiddleware
     {
         return [
             // new Middleware('permission:view fundraisers', ['index']),
-            new Middleware('permission:edit fundraisers', ['edit', 'update']),
+            new Middleware('permission:edit fundraisers', ['edit']),
+            new Middleware('permission:approve fundraisers', ['update']),
             new Middleware('permission:create fundraisers', ['create', 'store']),
-            new Middleware('permission:destroy fundraisers', ['destroy']),
+            new Middleware('permission:delete fundraisers', ['destroy']),
             new Middleware('permission:show fundraisers', ['show']),
         ];
     }
@@ -86,7 +87,7 @@ class FundraiserController extends Controller implements HasMiddleware
             }
         });
 
-        return redirect()->route('admin.fundraisers.index');
+        return redirect()->route('admin.fundraisers.index')->with('success','Success Updated');;
     }
 
     /**

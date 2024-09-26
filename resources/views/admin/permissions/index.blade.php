@@ -68,18 +68,23 @@
                             <td>{{ $permission->name }}</td>
                             <td>{{ date('d M Y', strtotime($permission->created_at)) }}</td>
                             <td class="md:flex flex-row items-center gap-x-3">
-                                <a href="{{ route('admin.permissions.edit', ['permission' => $permission]) }}"
-                                    class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
-                                    Edit
-                                </a>
-                                <form action="{{ route('admin.permissions.destroy', ['permission' => $permission]) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-red-500 hover:bg-red-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
-                                        Delete
-                                    </button>
-                                </form>
+                                @can('edit permissions')
+                                    <a href="{{ route('admin.permissions.edit', ['permission' => $permission]) }}"
+                                        class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                        Edit
+                                    </a>
+                                @endcan
+                                @can('delete permissions')
+                                    <form action="{{ route('admin.permissions.destroy', ['permission' => $permission]) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-red-500 hover:bg-red-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                            Delete
+                                        </button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr>
                     @empty

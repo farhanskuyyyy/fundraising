@@ -89,10 +89,12 @@
                                 @endif
                             </td>
                             <td class="md:flex flex-row items-center gap-x-3">
+                                @can('show donaturs')
                                 <a href="{{ route('admin.donaturs.show', ['donatur' => $donatur]) }}"
                                     class="inline-flex items-center justify-center  px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
                                     View
                                 </a>
+                                @endcan
                             </td>
                         </tr>
                     @empty

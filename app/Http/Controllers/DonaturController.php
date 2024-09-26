@@ -15,7 +15,7 @@ class DonaturController extends Controller implements HasMiddleware
             new Middleware('permission:view donaturs',['index']),
             new Middleware('permission:edit donaturs',['edit','update']),
             new Middleware('permission:create donaturs',['create','store']),
-            new Middleware('permission:destroy donaturs',['destroy']),
+            new Middleware('permission:delete donaturs',['destroy']),
             new Middleware('permission:show donaturs',['show']),
         ];
     }
@@ -71,7 +71,7 @@ class DonaturController extends Controller implements HasMiddleware
             ]);
         });
 
-        return redirect()->route('admin.donaturs.show',$donatur);
+        return redirect()->route('admin.donaturs.show',$donatur)->with('success','Success Updated');;
     }
 
     /**

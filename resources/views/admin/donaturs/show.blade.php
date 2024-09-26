@@ -89,14 +89,16 @@
                 <img src="{{ Storage::url($donatur->proof) }}" alt=""
                     class="rounded-2xl object-cover w-[300px] h-[200px] mb-3">
                 @if (!$donatur->is_paid)
-                    <hr class="my-5">
-                    <form action="{{ route('admin.donaturs.update', ['donatur' => $donatur]) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <button type="submit" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full ">
-                            Confirm Donation
-                        </button>
-                    </form>
+                    @can('edit donaturs')
+                        <hr class="my-5">
+                        <form action="{{ route('admin.donaturs.update', ['donatur' => $donatur]) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full ">
+                                Confirm Donation
+                            </button>
+                        </form>
+                    @endcan
                 @endif
             </div>
         </div>

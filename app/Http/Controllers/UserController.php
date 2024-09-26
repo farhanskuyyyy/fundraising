@@ -18,7 +18,7 @@ class UserController extends Controller implements HasMiddleware
             new Middleware('permission:view users',['index']),
             new Middleware('permission:edit users',['edit','update']),
             new Middleware('permission:create users',['create','store']),
-            new Middleware('permission:destroy users',['destroy']),
+            new Middleware('permission:delete users',['destroy']),
             new Middleware('permission:show users',['show']),
         ];
     }
@@ -60,7 +60,7 @@ class UserController extends Controller implements HasMiddleware
             }
         });
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success','Success Created');;
     }
 
     /**
@@ -102,7 +102,7 @@ class UserController extends Controller implements HasMiddleware
             }
         });
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success','Success Updated');;
     }
 
     /**
@@ -117,6 +117,6 @@ class UserController extends Controller implements HasMiddleware
         } catch (\Throwable $th) {
             DB::rollBack();
         }
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success','Success Deleted');;
     }
 }

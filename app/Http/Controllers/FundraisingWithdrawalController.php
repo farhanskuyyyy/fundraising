@@ -20,7 +20,7 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
             new Middleware('permission:view fundraising_withdrawals', ['index']),
             new Middleware('permission:edit fundraising_withdrawals', ['edit', 'update']),
             new Middleware('permission:create fundraising_withdrawals', ['create', 'store']),
-            new Middleware('permission:destroy fundraising_withdrawals', ['destroy']),
+            new Middleware('permission:delete fundraising_withdrawals', ['destroy']),
             new Middleware('permission:show fundraising_withdrawals', ['show']),
         ];
     }
@@ -90,7 +90,7 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
             $fundraising->withdrawals()->create($validated);
         });
 
-        return redirect()->route('admin.fundraising_withdrawals.index');
+        return redirect()->route('admin.fundraising_withdrawals.index')->with('success','Success Created');;
     }
 
     /**
@@ -126,7 +126,7 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
             $fundraisingWithdrawal->update($validated);
         });
 
-        return redirect()->route('admin.fundraising_withdrawals.show', ['fundraising_withdrawal' => $fundraisingWithdrawal]);
+        return redirect()->route('admin.fundraising_withdrawals.show', ['fundraising_withdrawal' => $fundraisingWithdrawal])->with('success','Success Updated');;
     }
 
     /**

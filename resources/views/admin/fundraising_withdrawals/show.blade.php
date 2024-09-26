@@ -129,7 +129,7 @@
                 </div>
                 <hr class="my-5">
                 @if (!$fundraisingWithdrawal->has_sent)
-                    @role('owner')
+                    @can('approve fundraising_withdrawals')
                         <form
                             action="{{ route('admin.fundraising_withdrawals.update', ['fundraising_withdrawal' => $fundraisingWithdrawal]) }}"
                             method="POST" enctype="multipart/form-data">
@@ -145,18 +145,18 @@
                                 Confirm Withdrawal
                             </button>
                         </form>
-                    @endrole
+                    @endcan
                 @else
                     <h3 class="text-indigo-950 text-xl font-bold mb-5 dark:text-white">Already Proccessed</h3>
                     <img src="{{ Storage::url($fundraisingWithdrawal->proof) }}" alt=""
                         class="rounded-2xl object-cover w-[300px] h-[200px] mb-3">
                     <hr class="my-5">
                     @if (!$fundraisingWithdrawal->has_received)
-                        @role('owner')
+                        @can('approve fundraising_withdrawals')
                             <h3 class="text-indigo-950 text-xl font-bold dark:text-white">Sedang di proses oleh fundraiser
                             </h3>
-                        @endrole
-                        @role('fundraiser')
+                        @endcan
+                        @if (Auth::user()->fundraiser?->id && $fundraisingWithdrawal->fundraiser_id == Auth::user()->fundraiser?->id)
                             <h3 class="text-indigo-950 text-xl font-bold dark:text-white">Have You Delivered Money?</h3>
                             <form
                                 action="{{ route('admin.fundraising_phases.store', $fundraisingWithdrawal->fundraising_id) }}"
@@ -179,11 +179,12 @@
                                         name="photo" required autofocus autocomplete="photo" />
                                     <x-input-error :messages="$errors->get('photo')" class="mt-2" />
                                 </div>
-                                <button type="submit" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
+                                <button type="submit"
+                                    class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
                                     Update Donation
                                 </button>
                             </form>
-                        @endrole
+                        @endif
                     @else
                         @foreach ($fundraisingWithdrawal->fundraising->phases as $phase)
                             <h3 class="text-indigo-950 text-xl font-bold mb-5 dark:text-white">Uang Sudah Diterima

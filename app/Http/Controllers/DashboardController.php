@@ -17,7 +17,7 @@ class DashboardController extends Controller implements HasMiddleware
 {
     public static function middleware(): array {
         return [
-            new Middleware('permission:view dashboard',['index']),
+            // new Middleware('permission:view dashboard',['index']),
         ];
     }
 
@@ -31,7 +31,7 @@ class DashboardController extends Controller implements HasMiddleware
             Fundraiser::create($validate);
         });
 
-        return redirect()->route('admin.fundraisers.index');
+        return redirect()->route('admin.fundraisers.index')->with('success','Success Apply');;
     }
 
     public function index()

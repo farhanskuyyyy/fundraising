@@ -124,24 +124,30 @@
                                         </form>
                                     @endcanany
                                 @endif
-                                <a href="{{ route('admin.fundraisings.edit', ['fundraising' => $fundraising]) }}"
-                                    class="inline-flex items-center justify-center mt-5  px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
-                                    Edit
-                                </a>
-                                <a href="{{ route('admin.fundraisings.show', ['fundraising' => $fundraising]) }}"
-                                    class="inline-flex items-center justify-center mt-5  px-3 py-2 text-sm font-medium text-center text-white bg-sky-500 hover:bg-sky-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
-                                    View
-                                </a>
-                                <form
-                                    action="{{ route('admin.fundraisings.destroy', ['fundraising' => $fundraising]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-red-500 hover:bg-red-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
-                                        Delete
-                                    </button>
-                                </form>
+                                @can('edit fundraisings')
+                                    <a href="{{ route('admin.fundraisings.edit', ['fundraising' => $fundraising]) }}"
+                                        class="inline-flex items-center justify-center mt-5  px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                        Edit
+                                    </a>
+                                @endcan
+                                @can('show fundraisings')
+                                    <a href="{{ route('admin.fundraisings.show', ['fundraising' => $fundraising]) }}"
+                                        class="inline-flex items-center justify-center mt-5  px-3 py-2 text-sm font-medium text-center text-white bg-sky-500 hover:bg-sky-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                        View
+                                    </a>
+                                @endcan
+                                @can('delete fundraisings')
+                                    <form
+                                        action="{{ route('admin.fundraisings.destroy', ['fundraising' => $fundraising]) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="inline-flex items-center justify-center mt-6 px-3 py-2 text-sm font-medium text-center text-white bg-red-500 hover:bg-red-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                                            Delete
+                                        </button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr>
                     @empty

@@ -27,12 +27,14 @@ class PermissionSeeder extends Seeder
             'edit donaturs',
             'delete donaturs',
             'show donaturs',
+            'approve donaturs',
 
             'view fundraising_withdrawals',
             'create fundraising_withdrawals',
             'edit fundraising_withdrawals',
             'delete fundraising_withdrawals',
             'show fundraising_withdrawals',
+            'approve fundraising_withdrawals',
 
             'view fundraising_phases',
             'create fundraising_phases',
@@ -52,6 +54,7 @@ class PermissionSeeder extends Seeder
             'edit fundraisers',
             'delete fundraisers',
             'show fundraisers',
+            'approve fundraisers',
 
             'view roles',
             'create roles',

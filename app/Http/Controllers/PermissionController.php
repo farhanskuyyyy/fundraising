@@ -18,7 +18,7 @@ class PermissionController extends Controller implements HasMiddleware
             new Middleware('permission:view permissions', ['index']),
             new Middleware('permission:edit permissions', ['edit', 'update']),
             new Middleware('permission:create permissions', ['create', 'store']),
-            new Middleware('permission:destroy permissions', ['destroy']),
+            new Middleware('permission:delete permissions', ['destroy']),
             new Middleware('permission:show permissions', ['show']),
         ];
     }
@@ -49,7 +49,7 @@ class PermissionController extends Controller implements HasMiddleware
             $permission = Permission::create($validated);
         });
 
-        return redirect()->route('admin.permissions.index');
+        return redirect()->route('admin.permissions.index')->with('success','Success Created');;
     }
 
     /**
@@ -78,7 +78,7 @@ class PermissionController extends Controller implements HasMiddleware
             $permission->update($validated);
         });
 
-        return redirect()->route('admin.permissions.index');
+        return redirect()->route('admin.permissions.index')->with('success','Success Updated');;
     }
 
     /**
@@ -93,6 +93,6 @@ class PermissionController extends Controller implements HasMiddleware
         } catch (\Throwable $th) {
             DB::rollBack();
         }
-        return redirect()->route('admin.permissions.index');
+        return redirect()->route('admin.permissions.index')->with('success','Success Deleted');;
     }
 }

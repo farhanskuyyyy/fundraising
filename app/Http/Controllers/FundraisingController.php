@@ -21,7 +21,7 @@ class FundraisingController extends Controller implements HasMiddleware
             new Middleware('permission:view fundraisings',['index']),
             new Middleware('permission:edit fundraisings',['edit','update']),
             new Middleware('permission:create fundraisings',['create','store']),
-            new Middleware('permission:destroy fundraisings',['destroy']),
+            new Middleware('permission:delete fundraisings',['destroy']),
             new Middleware('permission:show fundraisings',['show']),
             new Middleware('permission:approve fundraisings',['activeFundraising']),
         ];
@@ -76,7 +76,7 @@ class FundraisingController extends Controller implements HasMiddleware
             $fundraising = Fundraising::create($validated);
         });
 
-        return redirect()->route('admin.fundraisings.index');
+        return redirect()->route('admin.fundraisings.index')->with('success','Success Created');;
     }
 
     /**
@@ -121,7 +121,7 @@ class FundraisingController extends Controller implements HasMiddleware
             $fundraising->update($validated);
         });
 
-        return redirect()->route('admin.fundraisings.show', $fundraising);
+        return redirect()->route('admin.fundraisings.show', $fundraising)->with('success','Success Updated');;
     }
 
     /**
@@ -136,7 +136,7 @@ class FundraisingController extends Controller implements HasMiddleware
         } catch (\Throwable $th) {
             DB::rollBack();
         }
-        return redirect()->route('admin.fundraisings.index');
+        return redirect()->route('admin.fundraisings.index')->with('success','Success Deleted');;
     }
 
     public function activeFundraising(Fundraising $fundraising)
@@ -147,6 +147,6 @@ class FundraisingController extends Controller implements HasMiddleware
             ]);
         });
 
-        return redirect()->route('admin.fundraisings.show', $fundraising);
+        return redirect()->route('admin.fundraisings.show', $fundraising)->with('success','Success Approved');;
     }
 }

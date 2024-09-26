@@ -30,7 +30,7 @@
         </div>
         <hr class="my-2">
     </x-slot>
-    @role('owner')
+    @can('approve fundraisers')
         <div class="pt-12">
             <div class="w-full">
                 <table id="categories-table">
@@ -148,5 +148,5 @@
                 </div>
             </div>
         </div>
-    @endrole
+    @endcan
 </x-app-layout>

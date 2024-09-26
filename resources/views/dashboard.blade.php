@@ -47,7 +47,7 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
             <div class="item-card flex flex-col gap-y-10 md:flex-row justify-start gap-x-10 items-center">
 
-                @role('owner|fundraiser')
+                @can('view donaturs')
                     <div class="flex flex-col gap-y-3">
                         <svg width="46" height="46" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -69,6 +69,8 @@
                             <h3 class="text-indigo-950 text-xl font-bold"> {{ $donaturs }}</h3>
                         </div>
                     </div>
+                @endcan
+                @can('view fundraisings')
                     <div class="flex flex-col gap-y-3">
                         <svg width="46" height="46" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -89,7 +91,8 @@
                             <h3 class="text-indigo-950 text-xl font-bold"> {{ $fundraisings }}</h3>
                         </div>
                     </div>
-
+                @endcan
+                @can('view fundraising_withdrawals')
                     <div class="flex flex-col gap-y-3">
                         <svg width="46" height="46" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -113,9 +116,8 @@
                             <h3 class="text-indigo-950 text-xl font-bold"> {{ $withdrawals }} </h3>
                         </div>
                     </div>
-                @endrole
-
-                @role('owner')
+                @endcan
+                @can('view fundraisers')
                     <div class="flex flex-col gap-y-3">
                         <svg width="46" height="46" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -135,6 +137,8 @@
                             <h3 class="text-indigo-950 text-xl font-bold"> {{ $fundraisers }} </h3>
                         </div>
                     </div>
+                @endcan
+                @can('view categories')
                     <div class="flex flex-col gap-y-3">
                         <svg width="46" height="46" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -163,7 +167,7 @@
                             <h3 class="text-indigo-950 text-xl font-bold"> {{ $categories }} </h3>
                         </div>
                     </div>
-                @endrole
+                @endcan
             </div>
         </div>
     </div>

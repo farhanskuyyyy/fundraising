@@ -104,12 +104,14 @@
                                     </span>
                                 @endif
                             </td>
+                            @can('show fundraising_withdrawals')
                             <td class="md:flex flex-row items-center gap-x-3">
                                 <a href="{{ route('admin.fundraising_withdrawals.show', $withdrawal) }}"
                                     class="inline-flex items-center justify-center  px-3 py-2 text-sm font-medium text-center text-white bg-indigo-500 hover:bg-indigo-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
                                     View
                                 </a>
                             </td>
+                            @endcan
                         </tr>
                     @empty
                     @endforelse
