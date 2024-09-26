@@ -53,12 +53,6 @@ class PermissionSeeder extends Seeder
             'delete fundraisers',
             'show fundraisers',
 
-            'view my_withdrawals',
-            'create my_withdrawals',
-            'edit my_withdrawals',
-            'delete my_withdrawals',
-            'show my_withdrawals',
-
             'view roles',
             'create roles',
             'edit roles',

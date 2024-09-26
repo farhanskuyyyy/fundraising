@@ -64,7 +64,7 @@ class FundraisingPhaseController extends Controller implements HasMiddleware
             ]);
         });
 
-        return redirect()->route('admin.my_withdrawals');
+        return redirect()->route('admin.fundraising_withdrawals.index');
     }
 
     /**

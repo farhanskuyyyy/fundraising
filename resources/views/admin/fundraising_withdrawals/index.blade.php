@@ -27,6 +27,15 @@
         <div class="sm:flex">
             <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
                 {{ __('Manage Withdrawals') }}</h1>
+            @can('create fundraising_withdrawals')
+                <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
+                    <a href="{{ route('admin.fundraising_withdrawals.create') }}"
+                        class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-green-500 hover:bg-green-700 rounded-lg bg-primary-700 hover:bg-primary-800 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700">
+                        <i class="fa-solid fa-plus mr-2"></i>
+                        Add Withdrawals
+                    </a>
+                </div>
+            @endcan
         </div>
         <hr class="my-2">
     </x-slot>
@@ -43,7 +52,7 @@
                         </th>
                         <th>
                             <span class="flex items-center">
-                                Target
+                                Amount Requested
                             </span>
                         </th>
                         <th>
@@ -72,7 +81,7 @@
                     @forelse ($withdrawals as $withdrawal)
                         <tr>
                             <td>{{ $withdrawal->fundraising->name }}</td>
-                            <td>Rp. {{ number_format($withdrawal->total_amount, 0, ',', '.') }}</td>
+                            <td>Rp. {{ number_format($withdrawal->amount_requested, 0, ',', '.') }}</td>
                             <td>{{ $withdrawal->fundraiser->user->name }}</td>
                             <td>{{ date('d M Y', strtotime($withdrawal->created_at)) }}</td>
                             <td>

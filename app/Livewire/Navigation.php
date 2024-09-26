@@ -93,14 +93,6 @@ class Navigation extends Component
                 'info' => null,
                 'children' => []
             ],
-            [
-                'name' => 'My Withdrawals',
-                'routeName' => 'admin.my_withdrawals',
-                'prefixName' => 'my_withdrawals',
-                'icon' => 'fa-solid fa-sack-dollar',
-                'info' => null,
-                'children' => []
-            ],
         ];
 
         $routeNow = explode('.', Request::route()->getName());

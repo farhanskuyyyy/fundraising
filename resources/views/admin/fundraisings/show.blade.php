@@ -106,48 +106,6 @@
             </div>
             <hr class="my-5">
 
-            @if ($goalReached)
-                @if (!$hasRequestedWithdrawal)
-                    <h3 class="text-indigo-950 text-2xl font-bold dark:text-white">Withdraw Donations</h3>
-                    <form method="POST"
-                        action="{{ route('admin.fundraising_withdrawals.store', ['fundraising' => $fundraising]) }}"
-                        enctype="multipart/form-data">
-                        @csrf
-
-                        <div>
-                            <x-input-label for="bank_name" :value="__('bank_name')" />
-                            <x-text-input id="bank_name" class="block mt-1 w-full" type="text" name="bank_name"
-                                :value="old('bank_name')" required autofocus autocomplete="bank_name" />
-                            <x-input-error :messages="$errors->get('bank_name')" class="mt-2" />
-                        </div>
-
-                        <div class="mt-4">
-                            <x-input-label for="bank_account_name" :value="__('bank_account_name')" />
-                            <x-text-input id="bank_account_name" class="block mt-1 w-full" type="text"
-                                name="bank_account_name" :value="old('bank_account_name')" required autofocus
-                                autocomplete="bank_account_name" />
-                            <x-input-error :messages="$errors->get('bank_account_name')" class="mt-2" />
-                        </div>
-
-                        <div class="mt-4">
-                            <x-input-label for="bank_account_number" :value="__('bank_account_number')" />
-                            <x-text-input id="bank_account_number" class="block mt-1 w-full" type="text"
-                                name="bank_account_number" :value="old('bank_account_number')" required autofocus
-                                autocomplete="bank_account_number" />
-                            <x-input-error :messages="$errors->get('bank_account_number')" class="mt-2" />
-                        </div>
-
-                        <div class="flex items-center justify-end mt-4">
-
-                            <button type="submit" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
-                                Request Withdraw
-                            </button>
-                        </div>
-                    </form>
-                    <hr class="my-5">
-                @endif
-            @endif
-
             <div class="flex flex-row justify-between items-center">
                 <div class="flex flex-col">
                     <h3 class="text-indigo-950 text-xl font-bold dark:text-white">Donaturs</h3>

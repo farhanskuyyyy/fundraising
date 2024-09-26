@@ -14,13 +14,14 @@ use App\Http\Requests\UpdateFundraisingWithdrawalRequest;
 
 class FundraisingWithdrawalController extends Controller implements HasMiddleware
 {
-    public static function middleware(): array {
+    public static function middleware(): array
+    {
         return [
-            new Middleware('permission:view fundraising_withdrawals',['index']),
-            new Middleware('permission:edit fundraising_withdrawals',['edit','update']),
-            new Middleware('permission:create fundraising_withdrawals',['create','store']),
-            new Middleware('permission:destroy fundraising_withdrawals',['destroy']),
-            new Middleware('permission:show fundraising_withdrawals',['show']),
+            new Middleware('permission:view fundraising_withdrawals', ['index']),
+            new Middleware('permission:edit fundraising_withdrawals', ['edit', 'update']),
+            new Middleware('permission:create fundraising_withdrawals', ['create', 'store']),
+            new Middleware('permission:destroy fundraising_withdrawals', ['destroy']),
+            new Middleware('permission:show fundraising_withdrawals', ['show']),
         ];
     }
 
@@ -29,8 +30,13 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
      */
     public function index()
     {
-        $withdrawals = FundraisingWithdrawal::orderByDesc('id')->get();
-        return view('admin.fundraising_withdrawals.index',compact('withdrawals'));
+        $user = Auth::user();
+        if ($user->hasRole('owner')) {
+            $withdrawals = FundraisingWithdrawal::with('fundraising')->orderByDesc('id')->get();
+        } else {
+            $withdrawals = FundraisingWithdrawal::with('fundraising')->where('fundraiser_id', $user->fundraiser->id)->orderByDesc('id')->get();
+        }
+        return view('admin.fundraising_withdrawals.index', compact('withdrawals'));
     }
 
     /**
@@ -38,18 +44,37 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        if ($user->hasRole('owner')) {
+            $fundraisings = Fundraising::where('is_active', 1)
+                ->where('has_finished', 0)
+                ->orderByDesc('id')
+                ->get();
+        } else {
+            $fundraisings = Fundraising::where('fundraiser_id', $user->fundraiser->id)->where('is_active', 1)
+                ->where('has_finished', 0)
+                ->orderByDesc('id')
+                ->get();
+        }
+        return view('admin.fundraising_withdrawals.create', compact('fundraisings'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFundraisingWithdrawalRequest $request,Fundraising $fundraising)
+    public function store(StoreFundraisingWithdrawalRequest $request)
     {
-        $hasRequestedWithdrawal = $fundraising->withdrawals()->exists();
+        $fundraising = Fundraising::find($request->fundraising_id);
+        if ($fundraising == null) {
+            return redirect()->back()->with('error','Fundraising Not Found');
+        }
 
-        if ($hasRequestedWithdrawal) {
-            return redirect()->route('admin.fundraisings.show',['fundraising' => $fundraising]);
+        if ($fundraising->withdrawals()->exists()) {
+            return redirect()->back()->with('error','Fundraising Already Request');
+        }
+
+        if ($fundraising->totalReachedAmount() < $fundraising->target_amount) {
+            return redirect()->back()->with('error','Fundraising not reached');
         }
 
         DB::transaction(function () use ($request, $fundraising) {
@@ -60,12 +85,12 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
             $validated['has_sent'] = false;
             $validated['amount_requested'] = $fundraising->totalReachedAmount();
             $validated['amount_received'] = 0;
-            $validated['proof'] = 'proofs/dummydelivery.png';
+            $validated['proof'] = '';
 
             $fundraising->withdrawals()->create($validated);
         });
 
-        return redirect()->route('admin.my_withdrawals');
+        return redirect()->route('admin.fundraising_withdrawals.index');
     }
 
     /**
@@ -73,7 +98,7 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
      */
     public function show(FundraisingWithdrawal $fundraisingWithdrawal)
     {
-        return view('admin.fundraising_withdrawals.show',compact('fundraisingWithdrawal'));
+        return view('admin.fundraising_withdrawals.show', compact('fundraisingWithdrawal'));
     }
 
     /**
@@ -89,10 +114,10 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
      */
     public function update(UpdateFundraisingWithdrawalRequest $request, FundraisingWithdrawal $fundraisingWithdrawal)
     {
-        DB::transaction(function() use($request,$fundraisingWithdrawal){
+        DB::transaction(function () use ($request, $fundraisingWithdrawal) {
             $validated = $request->validated();
             if ($request->hasFile('proof')) {
-                $proofPath = $request->file('proof')->store('proofs','public');
+                $proofPath = $request->file('proof')->store('proofs', 'public');
                 $validated['proof'] = $proofPath;
             }
 
@@ -101,7 +126,7 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
             $fundraisingWithdrawal->update($validated);
         });
 
-        return redirect()->route('admin.fundraising_withdrawals.show',['fundraising_withdrawal' => $fundraisingWithdrawal]);
+        return redirect()->route('admin.fundraising_withdrawals.show', ['fundraising_withdrawal' => $fundraisingWithdrawal]);
     }
 
     /**

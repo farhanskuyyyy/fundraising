@@ -22,6 +22,7 @@ class StoreFundraisingWithdrawalRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'fundraising_id' => ['required','numeric','max:10'],
             'bank_name' => ['required','string','max:255'],
             'bank_account_name' => ['required','string','max:255'],
             'bank_account_number' => ['required','string','max:255'],

@@ -18,8 +18,6 @@ class DashboardController extends Controller implements HasMiddleware
     public static function middleware(): array {
         return [
             new Middleware('permission:view dashboard',['index']),
-            new Middleware('permission:view my_withdrawals',['myWithdrawals']),
-            new Middleware('permission:show my_withdrawals',['myWithdrawalsDetails']),
         ];
     }
 
@@ -34,22 +32,6 @@ class DashboardController extends Controller implements HasMiddleware
         });
 
         return redirect()->route('admin.fundraisers.index');
-    }
-
-    public function myWithdrawals()
-    {
-        $user = Auth::user();
-        if ($user->hasRole('owner')) {
-            $withdrawals = FundraisingWithdrawal::with('fundraising')->get();
-        }else{
-            $withdrawals = FundraisingWithdrawal::with('fundraising')->where('fundraiser_id', $user->fundraiser->id)->get();
-        }
-        return view('admin.my_withdrawals.index', compact('withdrawals'));
-    }
-
-    public function myWithdrawalsDetails(FundraisingWithdrawal $fundraisingWithdrawal)
-    {
-        return view('admin.my_withdrawals.details', compact('fundraisingWithdrawal'));
     }
 
     public function index()
