@@ -8,25 +8,13 @@
                         Dashboard
                     </a>
                 </li>
-                <li>
-                    <div class="flex items-center">
-                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <a href="#"
-                            class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Users</a>
-                    </div>
-                </li>
             </ol>
         </nav>
     </x-slot>
     <x-slot name="header">
         <div class="sm:flex">
             <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                {{ Auth::user()->hasRole('owner') ? __('Owner Dashboard') : __('Dashboard') }}</h1>
+                {{ Auth::user()->hasRole('superadmin') ? __('Owner Dashboard') : __('Dashboard') }}</h1>
             {{-- <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
                 <button type="button"
                     class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-dark border-solid border-2 border-black rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:border-white dark:text-white">

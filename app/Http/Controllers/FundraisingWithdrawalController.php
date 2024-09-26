@@ -31,7 +31,7 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
     public function index()
     {
         $user = Auth::user();
-        if ($user->hasRole('owner')) {
+        if ($user->can('approve fundraising_withdrawals')) {
             $withdrawals = FundraisingWithdrawal::with('fundraising')->orderByDesc('id')->get();
         } else {
             $withdrawals = FundraisingWithdrawal::with('fundraising')->where('fundraiser_id', $user->fundraiser->id)->orderByDesc('id')->get();
@@ -45,13 +45,14 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
     public function create()
     {
         $user = Auth::user();
-        if ($user->hasRole('owner')) {
+        if ($user->can('approve fundraising_withdrawals')) {
             $fundraisings = Fundraising::where('is_active', 1)
                 ->where('has_finished', 0)
                 ->orderByDesc('id')
                 ->get();
         } else {
-            $fundraisings = Fundraising::where('fundraiser_id', $user->fundraiser->id)->where('is_active', 1)
+            $fundraisings = Fundraising::where('fundraiser_id', $user->fundraiser->id)
+                ->where('is_active', 1)
                 ->where('has_finished', 0)
                 ->orderByDesc('id')
                 ->get();
@@ -66,15 +67,15 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
     {
         $fundraising = Fundraising::find($request->fundraising_id);
         if ($fundraising == null) {
-            return redirect()->back()->with('error','Fundraising Not Found');
+            return redirect()->back()->with('error', 'Fundraising Not Found');
         }
 
         if ($fundraising->withdrawals()->exists()) {
-            return redirect()->back()->with('error','Fundraising Already Request');
+            return redirect()->back()->with('error', 'Fundraising Already Request');
         }
 
         if ($fundraising->totalReachedAmount() < $fundraising->target_amount) {
-            return redirect()->back()->with('error','Fundraising not reached');
+            return redirect()->back()->with('error', 'Fundraising not reached');
         }
 
         DB::transaction(function () use ($request, $fundraising) {
@@ -90,7 +91,7 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
             $fundraising->withdrawals()->create($validated);
         });
 
-        return redirect()->route('admin.fundraising_withdrawals.index')->with('success','Success Created');;
+        return redirect()->route('admin.fundraising_withdrawals.index')->with('success', 'Success Created');;
     }
 
     /**
@@ -126,7 +127,7 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
             $fundraisingWithdrawal->update($validated);
         });
 
-        return redirect()->route('admin.fundraising_withdrawals.show', ['fundraising_withdrawal' => $fundraisingWithdrawal])->with('success','Success Updated');;
+        return redirect()->route('admin.fundraising_withdrawals.show', ['fundraising_withdrawal' => $fundraisingWithdrawal])->with('success', 'Success Updated');;
     }
 
     /**

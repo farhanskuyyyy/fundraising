@@ -48,12 +48,12 @@
 
             @if ($fundraising->is_active)
                 <span class="text-white font-bold bg-green-500 rounded-2xl  p-5">
-                    Fundraising sudah disetujui oleh super admin (owner).
+                    Fundraising sudah disetujui oleh super admin.
                 </span>
             @else
                 <div class="flex flex-row justify-between">
                     <span class="text-white font-bold bg-red-500 rounded-2xl  p-5">
-                        Fundraising belum disetujui oleh super admin (owner).
+                        Fundraising belum disetujui oleh super admin.
                     </span>
                 </div>
             @endif

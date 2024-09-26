@@ -4,13 +4,21 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Fundraising;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
 class Navigation extends Component
 {
     public function render()
     {
-        $fundraisings_count = Fundraising::count();
+        $user = Auth::user();
+        $fundraisingQuery = Fundraising::query();
+        if ($user->hasRole('fundraiser')) {
+            $fundraisingQuery->whereHas('fundraiser', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+        }
+        $fundraisings_count = $fundraisingQuery->count() ?? 0;
         $menus = [
             [
                 'name' => 'Dashboard',
@@ -66,7 +74,7 @@ class Navigation extends Component
                 'routeName' => 'admin.fundraisings.index',
                 'prefixName' => 'fundraisings',
                 'icon' => 'fa-solid fa-hand-holding-dollar',
-                'info' => $fundraisings_count,
+                'info' => $fundraisings_count ?? 0,
                 'children' => []
             ],
             [

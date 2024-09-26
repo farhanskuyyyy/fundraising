@@ -13,7 +13,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->hasAnyRole(['owner']);
+        return $this->user()->hasAnyPermission(['create users']);
     }
 
     /**

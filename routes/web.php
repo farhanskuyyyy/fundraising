@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('roles', RoleController::class);
         Route::resource('categories', CategoryController::class);
-        Route::resource('donaturs', DonaturController::class)->middleware('role:owner');
+        Route::resource('donaturs', DonaturController::class);
 
         Route::resource('fundraisers', FundraiserController::class);
         Route::get('fundraisers', [FundraiserController::class, 'index'])->name('fundraisers.index');
