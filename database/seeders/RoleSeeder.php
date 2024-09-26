@@ -33,7 +33,6 @@ class RoleSeeder extends Seeder
             'create fundraising_withdrawals',
             'edit fundraising_withdrawals',
             'show fundraising_withdrawals',
-            'approve fundraising_withdrawals',
 
             'view fundraising_phases',
             'create fundraising_phases',
