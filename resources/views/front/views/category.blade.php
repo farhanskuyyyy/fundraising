@@ -21,7 +21,7 @@
         </div>
         <div class="flex flex-col gap-4 px-4">
             @forelse ($category->fundraisings as $fundraising)
-                <a href="{{ route('front.details',$fundraising) }}" class="card">
+                <a href="{{ route('front.details', $fundraising) }}" class="card">
                     <div class="w-full flex items-center p-[14px] gap-3 rounded-2xl bg-white">
                         <div class="w-20 h-[90px] flex shrink-0 rounded-2xl overflow-hidden">
                             <img src="{{ Storage::url($fundraising->thumbnail) }}" class="w-full h-full object-cover"
@@ -30,10 +30,11 @@
                         <div class="flex flex-col gap-1">
                             <p class="font-bold line-clamp-1 hover:line-clamp-none">{{ $fundraising->name }}</p>
                             <p class="text-xs leading-[18px]">Target <span class="font-bold text-[#FF7815]">Rp
-                                {{ number_format($fundraising->target_amount, 0, ',', '.') }}</span>
+                                    {{ number_format($fundraising->target_amount, 0, ',', '.') }}</span>
                             </p>
                             <div class="flex items-center gap-1 sm:flex-row-reverse sm:justify-end">
-                                <p class="font-semibold sm:font-medium text-xs leading-[18px]">{{ $fundraising->fundraiser->user->name }}</p>
+                                <p class="font-semibold sm:font-medium text-xs leading-[18px]">
+                                    {{ $fundraising->fundraiser->user->name }}</p>
                                 <div class="flex shrink-0">
                                     <img src="{{ asset('assets/images/icons/tick-circle.svg') }}" alt="icon">
                                 </div>
@@ -42,7 +43,11 @@
                     </div>
                 </a>
             @empty
-                <p class="dark:text-white">No Data Found</p>
+                <div class="card">
+                    <div class="w-full p-[14px] rounded-2xl bg-white text-center flex items-center justify-center h-[200px]">
+                            <h1 class="text-dark text-2xl">No Data Found</h1>
+                    </div>
+                </div>
             @endforelse
         </div>
     </section>

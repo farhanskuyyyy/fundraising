@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-[#66697A]">Account Name</span>
-                                        <span class="font-semibold text-sm">AnggaMustHelp</span>
+                                        <span class="font-semibold text-sm">KitaGabisa.com</span>
                                         <input type="hidden" id="account" name="account" value="AnggaMustHelp">
                                     </div>
                                 </div>

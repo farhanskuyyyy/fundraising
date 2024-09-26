@@ -82,7 +82,7 @@
                     <div class="flex flex-col gap-[10px] p-5 rounded-[20px] bg-[#F6ECE2]">
                         <h2 class="font-semibold text-sm">{{ $phase->name }}</h2>
                         <div class="aspect-[61/30] rounded-2xl bg-[#D9D9D9] overflow-hidden">
-                            <img src="{{Storage::url($phase->photo)}}" class="w-full h-full object-cover"
+                            <img src="{{ Storage::url($phase->photo) }}" class="w-full h-full object-cover"
                                 alt="thumbnail">
                         </div>
                         <p class="text-sm leading-[26px]">{{ $phase->notes }}</p>
@@ -127,7 +127,12 @@
                                 </div>
                             </div>
                         @empty
-                            <p class="dark:text-white">No Data Found</p>
+                            <div class="card">
+                                <div
+                                    class="w-full p-[14px] rounded-2xl bg-white text-center flex items-center justify-center h-[200px]">
+                                    <h1 class="text-dark text-2xl">No Data Found</h1>
+                                </div>
+                            </div>
                         @endforelse
                     </div>
                 </div>

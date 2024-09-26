@@ -81,7 +81,7 @@ class FundraisingWithdrawalController extends Controller implements HasMiddlewar
         DB::transaction(function () use ($request, $fundraising) {
             $validated = $request->validated();
 
-            $validated['fundraiser_id'] = Auth::user()->fundraiser->id;
+            $validated['fundraiser_id'] = $fundraising->fundraiser_id;
             $validated['has_received'] = false;
             $validated['has_sent'] = false;
             $validated['amount_requested'] = $fundraising->totalReachedAmount();
