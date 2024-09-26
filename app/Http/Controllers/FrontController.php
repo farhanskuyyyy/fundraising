@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Donatur;
 use App\Models\Category;
 use App\Models\Fundraising;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use App\Http\Requests\StoreDonationRequest;
 
 class FrontController extends Controller
@@ -44,20 +46,35 @@ class FrontController extends Controller
 
     public function store(StoreDonationRequest $request, Fundraising $fundraising, $totalAmountDonation)
     {
-        DB::transaction(function () use ($request, $fundraising, $totalAmountDonation) {
-            $validated = $request->validated();
-            if ($request->hasFile('proof')) {
-                $proofPath = $request->file('proof')->store('proofs', 'public');
-                $validated['proof'] = $proofPath;
+        try {
+            try {
+                DB::beginTransaction();
+                $validated = $request->validated();
+                if ($request->hasFile('proof')) {
+                    $proofPath = $request->file('proof')->store('proofs', 'public');
+                    $validated['proof'] = $proofPath;
+                }
+
+                $validated['fundraising_id'] = $fundraising->id;
+                $validated['total_amount'] = $totalAmountDonation;
+                $validated['is_paid'] = false;
+
+                $donatur = Donatur::create($validated);
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                throw new Exception("Failed");
             }
+            return redirect()->route('front.success', ['donatur_id' => Crypt::encryptString($donatur->id)]);
+        } catch (\Throwable $th) {
+            return view('front.views.checkout', compact('fundraising', 'totalAmountDonation'));
+        }
+    }
 
-            $validated['fundraising_id'] = $fundraising->id;
-            $validated['total_amount'] = $totalAmountDonation;
-            $validated['is_paid'] = false;
-
-            $donatur = Donatur::create($validated);
-        });
-
-        return redirect()->route('front.details', $fundraising->slug);
+    public function success($encrypt_donatur_id)
+    {
+        $donatur_id = Crypt::decryptString($encrypt_donatur_id);
+        $donatur = Donatur::with('fundraising')->where('id', $donatur_id)->firstOrFail();
+        return view('front.views.success', compact('donatur'));
     }
 }
